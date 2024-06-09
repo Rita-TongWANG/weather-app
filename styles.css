@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    font-size: 20px;
+}
+
+
+
+#weather-container {
+    margin-top: 50px;
+}
+
+#weather-icon {
+    width: 100px;
+    height: 100px;
+}
+
+#city-input {
+    width: 50%; /* 设置输入框宽度为屏幕宽度的50% */
+    padding: 10px; /* 设置内边距 */
+    font-size: 16px; /* 设置字体大小 */
+}
+
+#city-input, button {
+    padding: 10px; /* 设置内边距 */
+    font-size: 16px; /* 设置字体大小 */
+    box-sizing: border-box; /* 将 padding 包含在宽度内，以确保总宽度一致 */
+    height: 40px; /* 设置输入框和按钮高度 */
+}
+
+.forecast {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%; /* 每个预报占据父容器的宽度 */
+    box-sizing: border-box; /* 将 padding 包含在宽度内，以确保总宽度一致 */
+}
+
+.forecast p {
+    margin: 5px 0;
+}
+
+.forecast img {
+    width: 50px;
+    height: 50px;
+    margin-top: 5px;
+}
+
+#forecast-container {
+    width: 50%; /* 设置父容器宽度为100% */
+    margin-top: 50px;
+    justify-content: center; /* 水平方向居中对齐 */
+    margin: 0 auto; /* 水平居中 */
+}

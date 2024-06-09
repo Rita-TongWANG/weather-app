@@ -13,6 +13,7 @@ body {
 #weather-icon {
     width: 100px;
     height: 100px;
+    display: none;
 }
 
 #city-input {

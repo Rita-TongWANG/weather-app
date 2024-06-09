@@ -1,4 +1,6 @@
 function getWeather() {
+    // 在获取天气数据并更新图片URL后，显示天气图标
+document.getElementById('weather-icon').style.display = 'inline';
     const city = document.getElementById('city-input').value;
     const apiKey = 'd120de1c602d81af993d8bf59e2f1e4f'; // 替换为你的 OpenWeatherMap API key
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
@@ -88,9 +90,50 @@ function renderForecast(forecastData) {
     });
 }
 
+
+function renderForecast(forecastData) {
+    const forecastContainer = document.getElementById('forecast-container');
+    forecastContainer.innerHTML = ''; // 清空之前的内容
+
+    // 用于存储每天的温度数据和对应的天气图标
+    const dailyData = {};
+
+    // 遍历预报数据，按日期分组并计算每天的最低和最高温度以及对应的天气图标
+    forecastData.forEach(item => {
+        const date = new Date(item.dt * 1000);
+        const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
+
+        if (!dailyData[dateString]) {
+            dailyData[dateString] = {
+                min: item.main.temp_min,
+                max: item.main.temp_max,
+                icon: item.weather[0].icon, // 使用第一个预报的天气图标
+                dayOfWeek: dayOfWeek // 存储星期几
+            };
+        } else {
+            dailyData[dateString].min = Math.min(dailyData[dateString].min, item.main.temp_min);
+            dailyData[dateString].max = Math.max(dailyData[dateString].max, item.main.temp_max);
+        }
+    });
+
+    // 遍历每天的温度数据和天气图标，创建并添加显示元素
+    Object.keys(dailyData).forEach(dateString => {
+        const { min, max, icon, dayOfWeek } = dailyData[dateString];
+        const forecastElement = document.createElement('div');
+        forecastElement.classList.add('forecast');
+        forecastElement.innerHTML = `
+            <p>${dateString} (${dayOfWeek})</p>
+            <p>Temperature: ${Math.round(min)}°C - ${Math.round(max)}°C</p>
+            <img src="https://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
+        `;
+        forecastContainer.appendChild(forecastElement);
+    });
+}
+
 // 在全局定义一个备用天气图标URL
 const defaultWeatherIcon = 'image/dog.jpg';
- // 替换为您自己的备用图标URL
+
 
 // 在获取天气数据时，如果天气图标未能正确加载，将使用备用图标
 document.getElementById('weather-icon').onerror = function() {
@@ -101,6 +144,8 @@ document.getElementById('weather-icon').onerror = function() {
 forecastElement.querySelector('img').onerror = function() {
     this.src = defaultWeatherIcon;
 };
+
+
 
 
 

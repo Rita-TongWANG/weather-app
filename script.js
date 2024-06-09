@@ -88,6 +88,21 @@ function renderForecast(forecastData) {
     });
 }
 
+// 在全局定义一个备用天气图标URL
+const defaultWeatherIcon = 'image/dog.jpg';
+ // 替换为您自己的备用图标URL
+
+// 在获取天气数据时，如果天气图标未能正确加载，将使用备用图标
+document.getElementById('weather-icon').onerror = function() {
+    this.src = defaultWeatherIcon;
+};
+
+// 在渲染天气预报时，如果某一天的天气图标未能正确加载，将使用备用图标
+forecastElement.querySelector('img').onerror = function() {
+    this.src = defaultWeatherIcon;
+};
+
+
 
 
 
